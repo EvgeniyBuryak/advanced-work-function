@@ -1,9 +1,9 @@
 function sumTo(num) {
-    let sum = 0;
-    for (let i = 0; i < num; i++) {
-        sum += num - i;
+    if (num < 1) {
+        return 0;
+    } else {
+        return num += sumTo(num - 1);
     }
-    return sum;
 }
 
 console.log(sumTo(1));  // = 1
