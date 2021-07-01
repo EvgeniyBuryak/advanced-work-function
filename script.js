@@ -1,38 +1,13 @@
-function sumSalaries(department) {
-    if (Array.isArray(department)) {
-        return department.reduce((previous, current) => previous + current.salary, 0);
-    } else {
-        let sum = 0;
-        for (let value of Object.values(department)) {
-            sum += sumSalaries(value);
-        }
-        return sum;
+function sumTo(num) {
+    let sum = 0;
+    for (let i = 0; i < num; i++) {
+        sum += num - i;
     }
+    return sum;
 }
 
-let company = {
-    sales: [{
-        name: 'Peter',
-        salary: 1000
-    }, {
-        name: 'Alice',
-        salary: 600
-    }],
-
-    development: {
-        sites: [{
-            name: 'Jhon',
-            salary: 2000
-        }, {
-            name: 'Alex',
-            salary: 1800
-        }],
-
-        internals: [{
-            name: 'Jack',
-            salary: 1300
-        }]
-    }
-};
-
-alert( sumSalaries(company) );
+console.log(sumTo(1));  // = 1
+console.log(sumTo(2));  // = 2 + 1 = 3
+console.log(sumTo(3));  // = 3 + 2 + 1 = 6
+console.log(sumTo(4));  // = 4 + 3 + 2 + 1 = 10
+console.log(sumTo(100));// = 100 + 99 + ... + 2 + 1 = 5050
