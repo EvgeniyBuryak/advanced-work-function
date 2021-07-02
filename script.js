@@ -1,17 +1,22 @@
+// формулы арифметической прогрессии
+function sumTo(n) {
+    return n * (n + 1) / 2;
+}
+
+function sumToCircle(num) {
+    let sum = 0;
+    for (let i = 0; i < num; i++) {
+        sum += num - i;
+    }
+    return sum;
+}
+
 function sumToRecursion(num) {
     if (num < 1) {
         return 0;
     } else {
         return num += sumToRecursion(num - 1);
     }
-}
-
-function sumTo(num) {
-    let sum = 0;
-    for (let i = 0; i < num; i++) {
-        sum += num - i;
-    }
-    return sum;
 }
 
 /*
@@ -23,28 +28,28 @@ console.log(sumTo(100));// = 100 + 99 + ... + 2 + 1 = 5050
 */
 
 function bench(f) {
-    let date1 = new Date(0);
-    let date2 = new Date();
-
     let start = Date.now();
-    for (let i = 0; i < 1000; i++) //old value 100000
-        f(10000); // тестируем на old value 100
+    for (let i = 0; i < 100000; i++) f(1000); // тестируем на old value 100
     return Date.now() - start;
 }
 
 let time1 = 0;
 let time2 = 0;
+let time3 = 0;
 
 // добавляем для "разогрева" перед основным циклом
 bench(sumTo);
+bench(sumToCircle);
 bench(sumToRecursion);
 
 // а теперь тестируем производительность
 // bench поочерёдно запускаются 10 раз
 for (let i = 0; i < 10; i++) {
     time1 += bench(sumTo);
-    time2 += bench(sumToRecursion);
+    time2 += bench(sumToCircle);
+    time3 += bench(sumToRecursion);
 }
 
-alert('Итоговое время цикл: ' + time1);
-alert('Итоговое время рекурсия: ' + time2);
+alert('Итоговое время арифметической прогрессии: ' + time1);
+alert('Итоговое время цикл: ' + time2);
+alert('Итоговое время рекурсия: ' + time3);
