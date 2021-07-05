@@ -1,28 +1,41 @@
-// Рекурсивный способ, который не подвисает на числе 77, если больше не проверял
-let results = [0, 1];
-function fib(n) {
-    if (n == 0) return results[0];
+function printList(list) {    
 
-    if (n == 1) return results[1];
+    if (list == null) return null;
 
-    if (!results[n]) {
-        results[n] = fib(n - 2) + fib(n - 1);
+    let result = "";
+
+    for (let [key, value] of Object.entries(list)) {
+        
+        if (key != "value") {
+            return result + printList(value);
+        } else {
+            result = value + " ";
+        }
     }
-    return results[n];
 }
 
-function fibCircle(n) {
-    let a = 1;
-    let b = 1;
-    for (let i = 3; i <= n; i++) {
-        let c = a + b;
-        a = b;
-        b = c;
-    }
-    return b;
+function printListCircle(list) {
+    let tmp = list;
+
+    while (tmp) {
+        alert(tmp.value);
+        tmp = tmp.next;
+    }    
 }
 
-alert(fib(3)); // 2
-alert(fib(7)); // 13
-alert(fib(77)); // 5527939700884757
-alert(fibCircle(77));
+let list = {
+    value: 1,
+    next: {
+        value: 2,
+        next: {
+            value: 3,
+            next: {
+                value: 4,
+                next: null
+            }
+        }
+    }
+};
+
+alert(printList(list));
+alert(printListCircle(list));
