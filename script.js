@@ -1,19 +1,24 @@
 function printList(list) {    
 
-    alert(list.value);
-
     if (list.next) {
         printList(list.next);
     }
+
+    alert(list.value);
 }
 
 function printListCircle(list) {
     let tmp = list;
+    let arr = [];
 
     while (tmp) {
-        alert(tmp.value);
+        arr.push(tmp.value);
         tmp = tmp.next;
-    }    
+    }
+
+    for (let i = arr.length - 1; i >= 0; i--) {
+        alert(arr[i]);
+    }
 }
 
 let list = {
