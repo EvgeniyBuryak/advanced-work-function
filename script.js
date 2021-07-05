@@ -1,39 +1,18 @@
-function printList(list) {    
+function showName(firstName, lastName, ...titles) {
+    alert(firstName + ' ' + lastName); // Arnold Washington
 
-    if (list.next) {
-        printList(list.next);
-    }
-
-    alert(list.value);
+    // Rest arguments into in array
+    // titles = ["Consul", "Imperator"]
+    alert(titles[0]); // Consul
+    alert(titles[1]); // Imperator
+    alert(titles.length); // 2
 }
 
-function printListCircle(list) {
-    let tmp = list;
-    let arr = [];
+showName("Arnold", "Washington", "Consul", "Imperator");
 
-    while (tmp) {
-        arr.push(tmp.value);
-        tmp = tmp.next;
-    }
+let arr = [3, 5, 7, 1];
+let arr2 = [6, 9, -2, 1];
 
-    for (let i = arr.length - 1; i >= 0; i--) {
-        alert(arr[i]);
-    }
-}
+let merged = [12, ...arr, 13, ...arr2];
 
-let list = {
-    value: 1,
-    next: {
-        value: 2,
-        next: {
-            value: 3,
-            next: {
-                value: 4,
-                next: null
-            }
-        }
-    }
-};
-
-alert(printList(list));
-alert(printListCircle(list));
+alert(Math.max(...merged));
