@@ -1,18 +1,7 @@
-function Counter() {
-    let count = 0;
-
-    this.up = function () {
-        return ++count;
-    };
-    this.down = function () {
-        return --count;
+function sum(a) {
+    return function (b) {
+        return a + b;
     };
 }
 
-let counter = new Counter();
-let counter2 = new Counter();
-
-alert(counter.up()); // ?
-alert(counter.up()); // ?
-alert(counter.down()); // ?
-alert(counter2.up()); // ?
+alert(sum(5)(3));
