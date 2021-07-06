@@ -1,13 +1,33 @@
-let arr = [1, 2, 3, 4, 5, 6, 7];
+let users = [
+    { name: "John", age: 20, surname: "Johnson" },
+    { name: "Pete", age: 18, surname: "Peterson" },
+    { name: "Ann", age: 19, surname: "Hathaway" }
+];
 
-alert(arr.filter(inBetween(3, 6))); // 3,4,5,6
+users.sort(byField('name'));
 
-alert(arr.filter(inArray([1, 2, 10]))); // 1,2
+users.sort(byField('age'));
 
-function inBetween(a, b) {
-    return (value) => (a <= value && value <= b) ? true : false;
+// ??? ???????
+function byField(str) {
+
+    if (str == 'name') {
+        // ?? ????? (Ann, John, Pete)
+        return (a, b) => a.name > b.name ? 1 : -1;
+    }
+    if (str == 'age') {
+        // ?? ???????? (Pete, Ann, John)
+        return (a, b) => a.age > b.age ? 1 : -1;
+    }
 }
 
-function inArray(arr) {
-    return (value => arr.includes(value));
-}
+/* ?? ??? ???????
+ * function byField(field) {
+    return (a, b) => a[field] > b[field] ? 1 : -1;
+}*/
+
+users.sort(byField('name'));
+users.forEach(user => alert(user.name)); // Ann, John, Pete
+
+users.sort(byField('age'));
+users.forEach(user => alert(user.name)); // Pete, Ann, John
