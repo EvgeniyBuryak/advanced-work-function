@@ -1,7 +1,13 @@
-function sum(a) {
-    return function (b) {
-        return a + b;
-    };
+let arr = [1, 2, 3, 4, 5, 6, 7];
+
+alert(arr.filter(inBetween(3, 6))); // 3,4,5,6
+
+alert(arr.filter(inArray([1, 2, 10]))); // 1,2
+
+function inBetween(a, b) {
+    return (value) => (a <= value && value <= b) ? true : false;
 }
 
-alert(sum(5)(3));
+function inArray(arr) {
+    return (value => arr.includes(value));
+}
