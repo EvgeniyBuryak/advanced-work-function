@@ -1,21 +1,36 @@
-function makeArmy() {
-    let shooters = [];
+function makeCounter() {
 
-    //let i = 0;
-    for (let i = 0; i < 10; i++) {
-        //let num = i; // my version of the solution with while   
-        let shooter = function () {
-            alert(i); 
-        };
-        shooters.push(shooter);
-        //i++;
+    let count = 0;
+
+    function counter() {
+        return ++count;
+    };
+
+    //counter.set = value => count = value;
+    counter.set = function func(value) {
+        if (value == 0) value = "" + value;
+
+        if (value) {
+            count = value;
+        } else {
+            func(0);
+        }
+        return count;
     }
 
-    return shooters;
+    //counter.decrease = () => count--; 
+    counter.decrease = function () {
+        return --count;
+    }
+
+    return counter;
 }
 
-let army = makeArmy();
+let counter = makeCounter();
 
-army[0](); 
-army[5](); 
-// outputs 10, but should 0, 1, 2, 3...
+alert(counter());
+alert(counter());
+alert(counter.set());
+alert(counter());
+alert(counter.set(8));
+alert(counter.decrease());
