@@ -1,36 +1,18 @@
-function makeCounter() {
+let sum = function func(a) {
 
-    let count = 0;
-
-    function counter() {
-        return ++count;
+    function counter(b) {
+        return func(a + b);
     };
 
-    //counter.set = value => count = value;
-    counter.set = function func(value) {
-        if (value == 0) value = "" + value;
-
-        if (value) {
-            count = value;
-        } else {
-            func(0);
-        }
-        return count;
-    }
-
-    //counter.decrease = () => count--; 
-    counter.decrease = function () {
-        return --count;
-    }
+    counter.toString = () => {
+        return a;
+    };
 
     return counter;
 }
 
-let counter = makeCounter();
-
-alert(counter());
-alert(counter());
-alert(counter.set());
-alert(counter());
-alert(counter.set(8));
-alert(counter.decrease());
+console.log(sum(1)(2)); // == 3; // 1 + 2
+console.log(+sum(1)(2)(3)); // == 6; // 1 + 2 + 3
+console.log(sum(5)(-1)(2)); // == 6  
+console.log(sum(6)(-1)(-2)(-3)); // == 0
+console.log(sum(0)(1)(2)(3)(4)(5)); // == 15
