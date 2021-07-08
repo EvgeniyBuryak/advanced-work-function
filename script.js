@@ -21,10 +21,10 @@ function cachingDecorator(func, hash) {
 }
 
 function hash(args) {
-    return args[0] + ',' + args[1];
+    return [].join.call(args);// args[0] + ',' + args[1];
 }
 
 worker.slow = cachingDecorator(worker.slow, hash);
 
-alert(worker.slow(3, 5)); // работает
+alert(worker.slow(3, 5, 8)); // работает
 alert("Again " + worker.slow(3, 5)); // аналогично (из кеша)
