@@ -1,30 +1,33 @@
-let worker = {
-    slow(min, max) {
-        alert(`Called with ${min},${max}`);
-        return min + max;
-    }
-};
+function work(a, b) {
+    alert(a + b);
+}
 
-function cachingDecorator(func, hash) {
-    let cache = new Map();
-    return function () {
-        let key = hash(arguments); // (*)
-        if (cache.has(key)) {
-            return cache.get(key);
-        }
+/**
+ * Создайте декоратор spy(func), который должен
+ * возвращать обёртку, которая сохраняет все вызовы
+ * функции в своём свойстве calls.
+ *
+ * Каждый вызов должен сохраняться как массив аргументов.
+ * */
+function spy(func) {
 
-        let result = func.call(this, ...arguments); // (**)
+    function wrapper(...args) {
 
-        cache.set(key, result);
-        return result;
+        wrapper.calls.push(args);
+
+        func.apply(this, args);
     };
+
+    wrapper.calls = [];
+
+    return wrapper;
 }
 
-function hash(args) {
-    return [].join.call(args);// args[0] + ',' + args[1];
+work = spy(work);
+
+work(1, 2);
+work(3, 4);
+
+for (let args of work.calls) {
+    alert('call:' + args.join());
 }
-
-worker.slow = cachingDecorator(worker.slow, hash);
-
-alert(worker.slow(3, 5, 8)); // работает
-alert("Again " + worker.slow(3, 5)); // аналогично (из кеша)
