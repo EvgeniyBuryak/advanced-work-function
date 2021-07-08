@@ -1,28 +1,30 @@
-function slow(x) {
-    // здесь могут быть ресурсоёмкие вычисления
-    alert(`Called with ${x}`);
-    return x;
-}
+// do it worker.slow caching
+let worker = {
+    someMethod() {
+        return 1;
+    },
+
+    slow(x) {
+        // here super hard task for processor
+        alert("Called with " + x);
+        return x * this.someMethod(); // (*)
+    }
+};
 
 function cachingDecorator(func) {
     let cache = new Map();
-
     return function (x) {
-        if (cache.has(x)) {    // если кеш содержит такой x,
-            return cache.get(x); // читаем из него результат
+        if (cache.has(x)) {
+            return cache.get(x);
         }
-
-        let result = func(x); // иначе, вызываем функцию
-
-        cache.set(x, result); // и кешируем (запоминаем) результат
+        let result = func.call(this, x); // (**)
+        cache.set(x, result);
         return result;
     };
 }
 
-slow = cachingDecorator(slow);
+alert(worker.slow(1)); // original method
 
-alert(slow(1)); // slow(1) кешируем
-alert("Again: " + slow(1)); // возвращаем из кеша
+worker.slow = cachingDecorator(worker.slow); // caching it
 
-alert(slow(2)); // slow(2) кешируем
-alert("Again: " + slow(2)); // возвращаем из кеша
+alert(worker.slow(2)); 
