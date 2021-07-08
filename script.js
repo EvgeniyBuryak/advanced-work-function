@@ -1,21 +1,38 @@
-let sum = function (a) {
+// outputs every second
+/*function printNumbers(from, to) {
 
-    function f(b) {
-        f.currentSum += b; 
-        return f;
-    };
+    let timerId = setInterval(() => {
+        (from <= to) ? alert("Число " + from++) : clearInterval(timerId)
+    }, 1000);
+}*/
 
-    f.currentSum = a;
+// The First call is instant    
+function printNumbers(from, to) {
+  let current = from;
 
-    f.toString = () => {
-        return f.currentSum;
-    };
+  function go() {
+    alert(current);
+    if (current == to) {
+      clearInterval(timerId);
+    }
+    current++;
+  }
 
-    return f;
+  go();
+  let timerId = setInterval(go, 1000);
 }
 
-alert(sum(1)(2)); // == 3; // 1 + 2
-console.log(sum(1)(2)(3)); // == 6; // 1 + 2 + 3
-console.log(sum(5)(-1)(2)); // == 6  
-console.log(sum(6)(-1)(-2)(-3)); // == 0
-console.log(sum(0)(1)(2)(3)(4)(5)); // == 15
+printNumbers(5, 10);
+
+function printNumbersTimeout(from, to) {
+
+    let timerId = setTimeout(function func() {
+
+        if (from <= to) {
+            alert("Число " + from++)
+            timerId = setTimeout(func(), 1000);
+        } else { clearInterval(timerId); }
+    }, 1000);
+}
+
+printNumbersTimeout(1, 5);
