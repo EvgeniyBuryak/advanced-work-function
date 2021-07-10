@@ -1,22 +1,37 @@
-function debounce(func, ms) {
-    let isCooldown = false;
+function f(a) {
+    console.log(a);
+}
 
-    return function () {
-        if (isCooldown) return;
+function throttle(func, ms) {
+    let isThrottled = false;
+    let lastArg;
+    let lastThis;
+
+    function wrapper() {
+        if (isThrottled) {
+            lastArg = arguments;
+            lastThis = this;
+            return;
+        }
 
         func.apply(this, arguments);
 
-        isCooldown = true;
+        isThrottled = true;
 
-        setTimeout(() => isCooldown = false, ms);
-    };
+        setTimeout(() => {
+            isThrottled = false;
+            if (lastArg) {
+                wrapper.apply(lastThis, lastArg);
+                lastArg = lastThis = null;
+            }
+        }, ms);
+    }
+
+    return wrapper;
 }
 
-let f = debounce(alert, 1000);
+let f1000 = throttle(f, 1000);
 
-f(1);
-f(2);
-
-setTimeout( () => f(3), 100);
-setTimeout( () => f(4), 1100);
-setTimeout( () => f(5), 1500);
+f1000(1);
+f1000(2);
+f1000(3);
