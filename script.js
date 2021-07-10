@@ -1,16 +1,14 @@
 function debounce(func, ms) {
-    let start;
+    let isCooldown = false;
 
     return function () {
-        if (!start) {
-            start = Date.now();
-            setTimeout(() => func.apply(this, arguments), ms);
-        }
+        if (isCooldown) return;
 
-        if (start + ms < Date.now()) {
-            start = Date.now();
-            setTimeout(() => func.apply(this, arguments), ms);
-        }        
+        func.apply(this, arguments);
+
+        isCooldown = true;
+
+        setTimeout(() => isCooldown = false, ms);
     };
 }
 
