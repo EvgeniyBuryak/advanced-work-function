@@ -1,37 +1,15 @@
-function f(a) {
-    console.log(a);
+function askPassword(ok, fail) {
+    let password = prompt("Password?", '');
+    if (password == "rockstar") ok();
+    else fail();
 }
 
-function throttle(func, ms) {
-    let isThrottled = false;
-    let lastArg;
-    let lastThis;
+let user = {
+    name: 'John',
 
-    function wrapper() {
-        if (isThrottled) {
-            lastArg = arguments;
-            lastThis = this;
-            return;
-        }
-
-        func.apply(this, arguments);
-
-        isThrottled = true;
-
-        setTimeout(() => {
-            isThrottled = false;
-            if (lastArg) {
-                wrapper.apply(lastThis, lastArg);
-                lastArg = lastThis = null;
-            }
-        }, ms);
+    login(result) {
+        alert(this.name + (result ? ' logged in' : ' failed to log in'));
     }
+};
 
-    return wrapper;
-}
-
-let f1000 = throttle(f, 1000);
-
-f1000(1);
-f1000(2);
-f1000(3);
+askPassword(user.login.bind(user, true), user.login.bind(user, false));
